@@ -4,6 +4,8 @@ steamer webpack util functions
 
 ### Functions
 
+For function parameter details, you can take a look at `index.js`
+
 * getHtmlFile
 	- return html files automatically
 ```
