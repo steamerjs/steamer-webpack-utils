@@ -24,6 +24,11 @@ module.exports = {
 		return srcFiles;
 	},
 
+	/**
+	 * get sprite folder, only depth 1st folder matter
+	 * @param  {String} spritePath [sprite image parent folder]
+	 * @return {Array}             [sprite folder]
+	 */
 	getSpriteFolder: function(spritePath) {
 		let srcFiles = fs.readdirSync(spritePath);
 
