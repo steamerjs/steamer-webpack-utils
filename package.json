@@ -1,0 +1,34 @@
+{
+  "name": "steamer-webpack-utils",
+  "version": "0.1.0",
+  "description": "steamer-webpack-utils",
+  "main": "index.js",
+  "scripts": {
+    
+  },
+  "main" "index.js",
+  "files": [
+    "bin",
+    "libs",
+    "template"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteamerTeam/steamer-webpack-utils.git"
+  },
+  "keywords": [
+    "steamer"
+  ],
+  "author": "lcxfs1991",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SteamerTeam/steamer-webpack-utils/issues"
+  },
+  "homepage": "https://github.com/SteamerTeam/steamer-webpack-utils#readme",
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    
+  }
+}
