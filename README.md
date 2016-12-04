@@ -30,4 +30,4 @@ For function parameter details, you can take a look at `index.js`
 ```
 
 ### Changelog
-* v0.1.0 finish basic features and add es6 and es5 support
+* v0.1.0 finish basic features
