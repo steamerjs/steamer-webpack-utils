@@ -10,6 +10,11 @@ module.exports = {
 	 * @return {Array}          [array of html files path]
 	 */
 	getHtmlFile: function(srcPath) {
+
+		if (!fs.existsSync(srcPath)) {
+			return [];
+		}
+		
 		// read html filename from 
 		let srcFiles = fs.readdirSync(srcPath);
 
@@ -30,6 +35,11 @@ module.exports = {
 	 * @return {Array}             [sprite folder]
 	 */
 	getSpriteFolder: function(spritePath) {
+		
+		if (!fs.existsSync(spritePath)) {
+			return [];
+		}
+
 		let srcFiles = fs.readdirSync(spritePath);
 
 		srcFiles = srcFiles.filter((item, index) => {
@@ -48,6 +58,11 @@ module.exports = {
 	 */
 	getJsFile: function(srcPath, jsDirectory, fileName, extensions) {
 		let jsFileArray = {};
+
+		if (!fs.existsSync(srcPath)) {
+			return jsFileArray;
+		}
+
 		//read js filename
 		let srcFiles = fs.readdirSync(path.join(srcPath, jsDirectory));
 		
