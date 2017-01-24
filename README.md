@@ -4,12 +4,41 @@ steamer webpack util functions
 
 ### Functions
 
+#### Example project folder
+
+```
+src
+ |-- page
+ |___|
+ |   |-- index
+ |   |    |-- main.js
+ |   |     
+ |   |-- spa
+ |   |    |-- main.js
+ |   |
+ |   |-- detail
+ |        |-- main.jsx
+ |
+ |-- img
+ |    |-- sprites
+ |          |- button
+ |          |- icon
+ |
+ |
+ |-- index.html
+ |-- spa.html
+ |-- detail.html
+```
+
 For function parameter details, you can take a look at `index.js`
 
 * getHtmlFile
 	- return html files automatically
 ```
 	var htmlFiles = getHtmlFile('src');
+
+	// it returns
+	["index", "spa", "detail"]
 ```
 
 * filterHtmlFile
@@ -26,12 +55,22 @@ For function parameter details, you can take a look at `index.js`
 	- get sprite folder
 ```
 	var spriteFolders = getSpriteFolder('src/img/sprites');
+
+	// it returns
+	['button', 'icon']
 ```
 
 * getJsFile
 	- get js files automatically
 ```
 	var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
+
+	// it returns
+	{
+		'js/index': ['xxx/project/src/page/index/main.js'],
+		'js/spa': ['xxx/project/src/page/spa/main.js'], 
+		'js/detail': ['xxx/project/src/page/index/main.jsx'],
+	}
 ```
 
 * filterJsFile
