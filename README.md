@@ -6,7 +6,7 @@ steamer webpack util functions
 
 #### Example project folder
 
-```
+```javascript
 src
  |-- page
  |___|
@@ -34,7 +34,8 @@ For function parameter details, you can take a look at `index.js`
 
 * getHtmlFile
 	- return html files automatically
-```
+
+```javascript
 	var htmlFiles = getHtmlFile('src');
 
 	// it returns
@@ -44,7 +45,7 @@ For function parameter details, you can take a look at `index.js`
 * filterHtmlFile
 	- select html files for compilation, usually used with `getHtmlFile`
 
-```
+```javascript
 	var htmlFiles = filterHtmlFile(['index', 'spa', 'detail'], ['index']);
 
 	// finally returns
@@ -53,7 +54,8 @@ For function parameter details, you can take a look at `index.js`
 
 *  getSpriteFolder
 	- get sprite folder
-```
+
+```javascript
 	var spriteFolders = getSpriteFolder('src/img/sprites');
 
 	// it returns
@@ -62,7 +64,8 @@ For function parameter details, you can take a look at `index.js`
 
 * getJsFile
 	- get js files automatically
-```
+
+```javascript
 	var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
 
 	// it returns
@@ -75,7 +78,8 @@ For function parameter details, you can take a look at `index.js`
 
 * filterJsFile
 	- select js files for compilation, usually used with `getJsFile`
-```
+
+```javascript
 	utils.filterJsFile({
 		"js/index": [....],
 		"js/spa": [....],
@@ -91,7 +95,8 @@ For function parameter details, you can take a look at `index.js`
 
 * addPlugins
 	- add webpack plugins
-```
+	
+```javascript
 	addPlugins(webpackConfig, webpackPlugin, webpackPluginConfig);
 ```
 
