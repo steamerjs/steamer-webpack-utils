@@ -11,6 +11,17 @@ For function parameter details, you can take a look at `index.js`
 ```
 	var htmlFiles = getHtmlFile('src');
 ```
+
+* filterHtmlFile
+	- select html files for compilation, usually used with `getHtmlFile`
+
+```
+	var htmlFiles = filterHtmlFile(['index', 'spa', 'detail'], ['index']);
+
+	// finally returns
+	['index']
+```
+
 *  getSpriteFolder
 	- get sprite folder
 ```
@@ -23,6 +34,22 @@ For function parameter details, you can take a look at `index.js`
 	var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
 ```
 
+* filterJsFile
+	- select js files for compilation, usually used with `getJsFile`
+```
+	utils.filterJsFile({
+		"js/index": [....],
+		"js/spa": [....],
+		"js/detail": [...],
+	}, ["js/index"])
+
+	// finally returns
+	{
+		"js/index": [....]
+	}
+
+```
+
 * addPlugins
 	- add webpack plugins
 ```
@@ -31,3 +58,4 @@ For function parameter details, you can take a look at `index.js`
 
 ### Changelog
 * v0.1.0 finish basic features
+* v0.1.3 add js and html filter functions

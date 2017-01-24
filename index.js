@@ -79,9 +79,45 @@ module.exports = {
 			});
 		});
 
-		// console.log(jsFileArray);
 		return jsFileArray;
 	},
+
+	/**
+	 * select js files for compilation
+	 * @param  {Object} jsFiles       [all js files]
+	 * @param  {Array} selectedFiles [selected js files]
+	 * @return {Array}               [selected js files in certain format]
+	 */
+	filterJsFile: function(jsFiles, selectedFiles) {
+
+		var newJsFiles = {};
+
+		Object.keys(jsFiles).map((item, index) => {
+			if (selectedFiles.includes(item)) {
+				newJsFiles[item] = jsFiles[item];
+			}
+		});
+
+		return newJsFiles;
+	},
+
+	/**
+	 * select html files for compilation
+	 * @param  {Array} htmlFiles     [all html files]
+	 * @param  {Array} selectedFiles [selected html files]
+	 * @return {Array}               [selected html files in certain format]
+	 */
+	filterHtmlFile: function(htmlFiles, selectedFiles) {
+
+		htmlFiles = htmlFiles.filter((item, index) => {
+			if (selectedFiles.includes(item)) {
+				return item;
+			}
+		});
+
+		return htmlFiles;
+	},
+
 
 	/**
 	 * add plugin for webpack config
