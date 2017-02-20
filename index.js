@@ -90,7 +90,7 @@ module.exports = {
 	 */
 	filterJsFile: function(jsFiles, selectedFiles) {
 
-		if (!selectedFiles) {
+		if (!selectedFiles || !selectedFiles.length) {
 			return jsFiles;
 		}
 
@@ -113,6 +113,10 @@ module.exports = {
 	 */
 	filterHtmlFile: function(htmlFiles, selectedFiles) {
 
+		if (!selectedFiles || !selectedFiles.length) {
+			return htmlFiles;
+		}
+		
 		htmlFiles = htmlFiles.filter((item, index) => {
 			if (selectedFiles.includes(item)) {
 				return item;

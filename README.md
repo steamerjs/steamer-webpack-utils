@@ -50,6 +50,12 @@ For function parameter details, you can take a look at `index.js`
 
 	// finally returns
 	['index']
+
+	// if second option is ignored
+	var htmlFiles = filterHtmlFile(['index', 'spa', 'detail']);
+
+	// it returns the original array
+	['index', 'spa', 'detail']
 ```
 
 *  getSpriteFolder
@@ -118,4 +124,4 @@ For function parameter details, you can take a look at `index.js`
 ### Changelog
 * v0.1.0 finish basic features
 * v0.1.3 add js and html filter functions
-* v0.1.4 filterJsFile supports return the original object
+* v0.1.5 filterJsFile and filterHtmlFile supports return the original object/array
