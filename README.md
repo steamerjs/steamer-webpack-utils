@@ -91,6 +91,21 @@ For function parameter details, you can take a look at `index.js`
 		"js/index": [....]
 	}
 
+	// if second option is ignored
+	utils.filterJsFile({
+		"js/index": [....],
+		"js/spa": [....],
+		"js/detail": [...],
+	});
+
+	// it returns the original object
+	{
+		"js/index": [....],
+		"js/spa": [....],
+		"js/detail": [...],
+	}
+
+
 ```
 
 * addPlugins
@@ -103,3 +118,4 @@ For function parameter details, you can take a look at `index.js`
 ### Changelog
 * v0.1.0 finish basic features
 * v0.1.3 add js and html filter functions
+* v0.1.4 filterJsFile supports return the original object

@@ -90,6 +90,10 @@ module.exports = {
 	 */
 	filterJsFile: function(jsFiles, selectedFiles) {
 
+		if (!selectedFiles) {
+			return jsFiles;
+		}
+
 		var newJsFiles = {};
 
 		Object.keys(jsFiles).map((item, index) => {
