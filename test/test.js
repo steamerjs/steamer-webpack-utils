@@ -156,7 +156,7 @@ describe("js files", function() {
 		let result = { 
 			'js/comment': [ path.join(TEST_SRC, 'page/comment/index.js') ],
   			'js/detail': [ path.join(TEST_SRC, 'page/detail/index.js') ],
-  			'js/index': [ path.join(TEST_SRC, 'page/index/index.js') ] 
+  			'js/index': [ path.join(TEST_SRC, 'page/index/index.jsx') ] 
   		};
 
   		let jsFiles = utils.getJsEntry({
@@ -197,8 +197,8 @@ describe("others", function() {
 		expect(conf).to.eql({ plugins: [ { abc: 123 } ] });
 	});
 
-	it("getArgs - without parameter", function() {
-		let argv = utils.getArgs();
+	it("getArgvs - without parameter", function() {
+		let argv = utils.getArgvs();
 
 		let result = { 
 			_: [],
@@ -210,7 +210,7 @@ describe("others", function() {
 
 	});
 
-	it("getArgs - with parameter", function() {
+	it("getArgvs - with parameter", function() {
 
 		let setArgv = [
 			'1',
@@ -222,7 +222,7 @@ describe("others", function() {
 			"123",
 		];
 		
-		let argv = utils.getArgs(setArgv);
+		let argv = utils.getArgvs(setArgv);
 		delete argv["$0"];
 
 		expect(argv).to.eql({ _: [ 1, 2 ], a: 123, ab: 123, b: ' 12', bc: 123 });

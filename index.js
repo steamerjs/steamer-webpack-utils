@@ -47,7 +47,7 @@ module.exports = {
 	 * @return {Array}          [array of html files path]
 	 */
 	getHtmlFile: function(srcPath) {
-		console.log("steamer-webpack-utils: getHtmlFile will be deprecated in next major release! Please use getHtmlEntry instead");
+		this.warn("steamer-webpack-utils: getHtmlFile will be deprecated in next major release! Please use getHtmlEntry instead");
 		
 		if (!fs.existsSync(srcPath)) {
 			return [];
@@ -132,7 +132,7 @@ module.exports = {
 	 */
 	getSpriteFolder: function(spritePath) {
 
-		console.log("steamer-webpack-utils: getSpriteFolder will be deprecated in next major release! Please use getSpriteEntry instead");
+		this.warn("steamer-webpack-utils: getSpriteFolder will be deprecated in next major release! Please use getSpriteEntry instead");
 		
 		if (!fs.existsSync(spritePath)) {
 			return [];
@@ -190,7 +190,7 @@ module.exports = {
 	 */
 	getJsFile: function(srcPath, jsDirectory, fileName, extensions) {
 
-		console.log("steamer-webpack-utils: getJsFile will be deprecated in next major release! Please use getJsEntry instead");
+		this.warn("steamer-webpack-utils: getJsFile will be deprecated in next major release! Please use getJsEntry instead");
 
 		let jsFileArray = {};
 
@@ -331,7 +331,7 @@ module.exports = {
 	/**
 	 * 
 	 */
-	getArgs: function(argvs) {
+	getArgvs: function(argvs) {
 
 		if (argvs) {
 			return yargs(argvs).argv;

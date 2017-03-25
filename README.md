@@ -239,7 +239,7 @@ utils.filterJsFile({
 	addPlugins(webpackConfig, webpackPlugin, webpackPluginConfig);
 ```
 
-* getArgs
+* getArgvs
 	- 获取命令行参数
 	- 参数
 		- `argvs`, `{Object}`, 具体参数，可留空，若留空，则自动返回 `process.argv` 被处理的参数
@@ -297,4 +297,3 @@ var spriteFolders = getSpriteFolder('src/img/sprites');
 // 返回
 ['button', 'icon']
 ```
-
