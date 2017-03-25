@@ -106,7 +106,7 @@ module.exports = {
 		let opt = options || {};
 
 		let spritePath = opt.spritePath || "";
-
+		console.log(spritePath, fs.existsSync(spritePath));
 		if (!fs.existsSync(spritePath)) {
 			return [];
 		}
