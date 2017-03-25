@@ -87,7 +87,6 @@ describe("sprites files", function() {
 
     	let spriteFiles = utils.getSpriteFolder({spritePath: spriteFolder});
 
-    	console.log(spriteFiles);
     	expect(spriteFiles).to.eql(result);
 	});
 });

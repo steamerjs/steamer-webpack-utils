@@ -106,7 +106,7 @@ module.exports = {
 		let opt = options || {};
 
 		let spritePath = opt.spritePath || "";
-		console.log(spritePath, fs.existsSync(spritePath));
+
 		if (!fs.existsSync(spritePath)) {
 			return [];
 		}
@@ -114,12 +114,9 @@ module.exports = {
 		let srcFiles = fs.readdirSync(spritePath),
 			spriteFiles = [];
 
-		console.log(srcFiles);
 		srcFiles = srcFiles.filter((item) => {
 		    return !~item.indexOf('.');
 		});
-
-		console.log(srcFiles);
 
 		srcFiles.map((item) => {
 			let obj = {};
