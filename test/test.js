@@ -95,9 +95,9 @@ describe("sprites files", function() {
     		} 
     	];
 
-    	expect(utils.getSpriteEntry({spritePath: ""})).to.eql([]);
+    	expect(utils.getSpriteEntry({srcPath: ""})).to.eql([]);
 
-    	let spriteFiles = utils.getSpriteEntry({spritePath: spriteFolder});
+    	let spriteFiles = utils.getSpriteEntry({srcPath: spriteFolder});
 
     	expect(spriteFiles).to.eql(result);
 	});

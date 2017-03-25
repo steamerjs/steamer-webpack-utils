@@ -43,7 +43,7 @@ src
 
 * getHtmlEntry
 	- 自动获取 `html` 文件
-	- 参数 `Object`
+	- 参数 `{Object}`
 		- `option.srcPath` `{String}` 包含有 `html` 文件的目录
 		- `option.level` `{Integer}` 0 表示在当前目录寻找，1 表示在下一级目录寻找
 
@@ -155,8 +155,8 @@ var htmlFiles = filterHtmlFile([
 
 *  getSpriteEntry
 	- 自动获取合图文件
-	- 参数
-		- `srcPath`, `{String}`, 源文件目录
+	- 参数,  `{Object}`
+		- `options.srcPath`, `{String}`, 源文件目录
 
 ```javascript
 var spriteFolders = getSpriteEntry('src/img/sprites');
@@ -167,16 +167,16 @@ var spriteFolders = getSpriteEntry('src/img/sprites');
 		key: 'btn',
 		path: 'path/src/img/sprites/btn'
 	},
-		{ 
-			key: 'list',
-			path: 'path/src/img/sprites/list'
+	{ 
+		key: 'list',
+		path: 'path/src/img/sprites/list'
 	} 
 ]
 ```
 
 * getJsEntry
  - 自动获取 `js` 文件
- - 参数, Object
+ - 参数, `{Object}`
  	- `option.srcPath`, {String}, 包含 `js` 文件的目录
 	- `option.fileName`, {String}, 主入口文件,默认 `main`
 	- `option.extensions`, {Array}, 主入口文件可能的后缀，默认 `["js"]`

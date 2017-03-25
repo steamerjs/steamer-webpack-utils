@@ -150,19 +150,19 @@ module.exports = {
 	/**
 	 * get sprite folder, only depth 1st folder matter
 	 * @param {Object} options
-	 *        - {String} spritePath [sprite image parent folder]
+	 *        - {String} srcPath [sprite image parent folder]
 	 * @return {Array}             [sprite folder]
 	 */
 	getSpriteEntry: function(options) {
 		let opt = options || {};
 
-		let spritePath = opt.spritePath || "";
+		let srcPath = opt.srcPath || "";
 
-		if (!fs.existsSync(spritePath)) {
+		if (!fs.existsSync(srcPath)) {
 			return [];
 		}
 
-		let srcFiles = fs.readdirSync(spritePath),
+		let srcFiles = fs.readdirSync(srcPath),
 			spriteFiles = [];
 
 		srcFiles = srcFiles.filter((item) => {
@@ -172,7 +172,7 @@ module.exports = {
 		srcFiles.map((item) => {
 			let obj = {};
 			obj.key = item;
-			obj.path = path.join(spritePath, item);
+			obj.path = path.join(srcPath, item);
 			spriteFiles.push(obj);
 		});
 
