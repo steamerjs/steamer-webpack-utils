@@ -25,7 +25,7 @@
   "homepage": "https://github.com/SteamerTeam/steamer-webpack-utils#readme",
   "dependencies": {
     "chalk": "^1.1.3",
-    "minimist": "^1.2.0"
+    "yargs": "^7.0.2"
   },
   "devDependencies": {
     "codecov.io": "^0.1.6",

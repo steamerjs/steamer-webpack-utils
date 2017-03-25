@@ -44,148 +44,148 @@ src
 * getHtmlFile
 	- 自动获取 `html` 文件
 	- 参数 `Object`
-		- `option.srcPath` {String} 包含有 `html` 文件的目录
-		- `option.level` {Integer} 0 表示在当前目录寻找，1 表示在下一级目录寻找
+		- `option.srcPath` `{String}` 包含有 `html` 文件的目录
+		- `option.level` `{Integer}` 0 表示在当前目录寻找，1 表示在下一级目录寻找
 
 ```javascript
-	var htmlFiles = getHtmlFile({
-		srcPath: path.join(process.cwd(), "src")
-	});
+var htmlFiles = getHtmlFile({
+	srcPath: path.join(process.cwd(), "src")
+});
 
-	// 返回
-	[ 
-		{ 
-			key: 'comment',
-	    	path: 'path/src/comment.html'
-	    },
-	  	{ 
-	  		key: 'detail',
-	    	path: 'path/src/detail.html'
-	    },
-	  	{ 
-	  		key: 'index',
-	    	path: 'path/src/index.html'
-	    } 
-	]
+// 返回
+[ 
+	{ 
+		key: 'comment',
+    	path: 'path/src/comment.html'
+    },
+  	{ 
+  		key: 'detail',
+    	path: 'path/src/detail.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/index.html'
+    } 
+]
 
-	var htmlFiles = getHtmlFile({
-		srcPath: path.join(process.cwd(), "src/page"),
-		level: 1
-	});
+var htmlFiles = getHtmlFile({
+	srcPath: path.join(process.cwd(), "src/page"),
+	level: 1
+});
 
-	// 返回
-	[ 
-		{ 
-			key: 'comment',
-	    	path: 'path/src/page/comment/index.html'
-	    },
-	  	{ 
-	  		key: 'detail',
-	    	path: 'path/src/page/detail/index.html'
-	    },
-	  	{ 
-	  		key: 'index',
-	    	path: 'path/src/page/index/index.html'
-	    } 
-	]
+// 返回
+[ 
+	{ 
+		key: 'comment',
+    	path: 'path/src/page/comment/index.html'
+    },
+  	{ 
+  		key: 'detail',
+    	path: 'path/src/page/detail/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+]
 ```
 
 * filterHtmlFile
 	- 筛选 `html` 文件, 通常与 `getHtmlFile` 一起使用
 	- 参数
-		- htmlFiles, {Array}, 所有 `html` 文件
-		- selectedFiles, {Array}, 选中的 `html` 文件
+		- `htmlFiles`, `{Array}`, 所有 `html` 文件
+		- `selectedFiles`, `{Array}`, 选中的 `html` 文件
 
 ```javascript
-	var htmlFiles = filterHtmlFile([ 
-		{ 
-			key: 'comment',
-	    	path: 'path/src/page/comment/index.html'
-	    },
-	  	{ 
-	  		key: 'detail',
-	    	path: 'path/src/page/detail/index.html'
-	    },
-	  	{ 
-	  		key: 'index',
-	    	path: 'path/src/page/index/index.html'
-	    } 
-	], ['index']);
+var htmlFiles = filterHtmlFile([ 
+	{ 
+		key: 'comment',
+    	path: 'path/src/page/comment/index.html'
+    },
+  	{ 
+  		key: 'detail',
+    	path: 'path/src/page/detail/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+], ['index']);
 
-	// 最终返回
-	[ 
-	  	{ 
-	  		key: 'index',
-	    	path: 'path/src/page/index/index.html'
-	    } 
-	]
+// 最终返回
+[ 
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+]
 
-	// 如果第二个参数被忽略，则完整返回
-	var htmlFiles = filterHtmlFile([ 
-		{ 
-			key: 'comment',
-	    	path: 'path/src/page/comment/index.html'
-	    },
-	  	{ 
-	  		key: 'detail',
-	    	path: 'path/src/page/detail/index.html'
-	    },
-	  	{ 
-	  		key: 'index',
-	    	path: 'path/src/page/index/index.html'
-	    } 
-	]);
+// 如果第二个参数被忽略，则完整返回
+var htmlFiles = filterHtmlFile([ 
+	{ 
+		key: 'comment',
+    	path: 'path/src/page/comment/index.html'
+    },
+  	{ 
+  		key: 'detail',
+    	path: 'path/src/page/detail/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+]);
 
-	// it returns the original array
-	[ 
-		{ 
-			key: 'comment',
-	    	path: 'path/src/page/comment/index.html'
-	    },
-	  	{ 
-	  		key: 'detail',
-	    	path: 'path/src/page/detail/index.html'
-	    },
-	  	{ 
-	  		key: 'index',
-	    	path: 'path/src/page/index/index.html'
-	    } 
-	]
+// it returns the original array
+[ 
+	{ 
+		key: 'comment',
+    	path: 'path/src/page/comment/index.html'
+    },
+  	{ 
+  		key: 'detail',
+    	path: 'path/src/page/detail/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+]
 ```
 
 *  getSpriteFolder
 	- 自动获取合图文件
 	- 参数
-		- `srcPath`, {String}, 源文件目录
+		- `srcPath`, `{String}`, 源文件目录
 
 ```javascript
-	var spriteFolders = getSpriteFolder('src/img/sprites');
+var spriteFolders = getSpriteFolder('src/img/sprites');
 
-	// 返回
-	[
+// 返回
+[
+	{ 
+		key: 'btn',
+		path: 'path/src/img/sprites/btn'
+	},
 		{ 
-			key: 'btn',
-			path: 'path/src/img/sprites/btn'
-		},
-			{ 
-				key: 'list',
-				path: 'path/src/img/sprites/list'
-		} 
-	]
+			key: 'list',
+			path: 'path/src/img/sprites/list'
+	} 
+]
 ```
 
 * getJsFile
 	- 自动获取 `js` 文件，此 `api` 即将被弃用，请改用 `getJsEntry`
 
 ```javascript
-	var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
+var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
 
-	// it returns
-	{
-		'js/index': ['xxx/project/src/page/index/main.js'],
-		'js/spa': ['xxx/project/src/page/spa/main.js'], 
-		'js/detail': ['xxx/project/src/page/index/main.jsx'],
-	}
+// it returns
+{
+	'js/index': ['xxx/project/src/page/index/main.js'],
+	'js/spa': ['xxx/project/src/page/spa/main.js'], 
+	'js/detail': ['xxx/project/src/page/index/main.jsx'],
+}
 ```
 
 * getJsEntry
@@ -198,30 +198,29 @@ src
 	- `option.level`, {Integer}, 0 表示在当前目录寻找，1 表示在下一级目录寻找
 
 ```javascript
-	var jsFiles utils.getJsEntry({
-		srcPath: path.join(process.cwd(), "src")
-	});
+var jsFiles utils.getJsEntry({
+	srcPath: path.join(process.cwd(), "src")
+});
 
-	// 返回
-	{ 
-		main: [ 'path/src/main.js') ] 
-	}
+// 返回
+{ 
+	main: [ 'path/src/main.js') ] 
+}
 
-	var jsFiles = utils.getJsEntry({
-		srcPath: path.join(process.cwd(), "src/page"),
-		fileName: "index",
-		extensions: ["js", "jsx"],
-		keyPrefix: "js/",
-		level: 1
-	});
+var jsFiles = utils.getJsEntry({
+	srcPath: path.join(process.cwd(), "src/page"),
+	fileName: "index",
+	extensions: ["js", "jsx"],
+	keyPrefix: "js/",
+	level: 1
+});
 
-	// 返回
-	{ 
-		'js/comment': [ 'path/src/page/comment/index.js' ],
-		'js/detail': [ 'path/src/page/detail/index.js' ],
-		'js/index': [ 'path/src/page/index/index.js' ] 
-	}
-
+// 返回
+{ 
+	'js/comment': [ 'path/src/page/comment/index.js' ],
+	'js/detail': [ 'path/src/page/detail/index.js' ],
+	'js/index': [ 'path/src/page/index/index.js' ] 
+}
 ```
 
 * filterJsFile
@@ -231,20 +230,20 @@ src
 		- selectedFiles, {Array}, 选中的 `js` 文件
 
 ```javascript
-	utils.filterJsFile({ 
-		'js/comment': [ 'path/src/page/comment/index.js' ],
-  		'js/detail': ['path/src/page/detail/index.js' ],
-  		'js/index': [ 'path/src/page/index/index.js' ] 
-  	}, ["js/index"])
+utils.filterJsFile({ 
+	'js/comment': [ 'path/src/page/comment/index.js' ],
+		'js/detail': ['path/src/page/detail/index.js' ],
+		'js/index': [ 'path/src/page/index/index.js' ] 
+	}, 
+	["js/index"]
+);
 
-	// finally returns
-	{ 
-  		'js/index': [ 'path/src/page/index/index.js' ] 
-  	}
+// finally returns
+{ 
+	'js/index': [ 'path/src/page/index/index.js' ] 
+}
 
-	// 如果 selectedFiles 参数被忽略，则完整返回
-
-
+// 如果 selectedFiles 参数被忽略，则完整返回
 ```
 
 * addPlugins
@@ -253,6 +252,11 @@ src
 ```javascript
 	addPlugins(webpackConfig, webpackPlugin, webpackPluginConfig);
 ```
+
+* getArgs
+	- 获取命令行参数
+	- 参数
+		- `argvs`, `{Object}`, 具体参数，可留空，若留空，则自动返回 `process.argv` 被处理的参数
 
 * error
 	- 报错信息

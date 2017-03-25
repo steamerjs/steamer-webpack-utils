@@ -173,9 +173,36 @@ describe("others", function() {
 		expect(conf).to.eql({ plugins: [ { abc: 123 } ] });
 	});
 
+	it("getArgs - without parameter", function() {
+		let argv = utils.getArgs();
 
-	it("getArgs", function() {
-		utils.getArgs();
+		let result = { 
+			_: [],
+	  	};
+
+	  	delete argv["$0"];
+
+	  	expect(argv).to.eql(result);
+
+	});
+
+	it("getArgs - with parameter", function() {
+
+		let setArgv = [
+			'1',
+			'2',
+			"-a=123",
+			"--ab=123",
+			"-b 12",
+			"--bc",
+			"123",
+		];
+		
+		let argv = utils.getArgs(setArgv);
+		delete argv["$0"];
+
+		expect(argv).to.eql({ _: [ 1, 2 ], a: 123, ab: 123, b: ' 12', bc: 123 });
+		
 	});
 });
 
@@ -225,16 +252,26 @@ describe("print message:", function() {
 		log.restore();
   	});
 
-  	it("log", function() {
+  	it("log - string", function() {
   		log.restore();
   		var consoleLog = sinon.stub(console, 'log');
 
 		utils.log('success', 'green');
-
 		expect(console.log.calledOnce).to.be(true);
 		expect(console.log.calledWith(chalk['green']('success'))).to.be(true);
 
 		consoleLog.restore();
+  	});
+
+  	it("log - object", function() {
+  		log.restore();
+  		var consoleLog = sinon.stub(console, 'log');
+
+  		utils.log({info: 'success'}, 'green');
+		expect(console.log.calledOnce).to.be(true);
+		expect(console.log.calledWith(chalk['green'](JSON.stringify({info: 'success'})))).to.be(true);
+  		
+  		consoleLog.restore();
   	});
 });
 

@@ -3,7 +3,7 @@
 const fs = require('fs'),
 	  path = require('path'),
 	  chalk = require('chalk'),
-	  minimist = require('minimist');
+	  yargs = require('yargs');
 
 module.exports = {
 	
@@ -248,8 +248,14 @@ module.exports = {
 	/**
 	 * 
 	 */
-	getArgs: function() {
-		
+	getArgs: function(argvs) {
+
+		if (argvs) {
+			return yargs(argvs).argv;
+		} 
+		else {
+			return yargs.argv;
+		}
 	},
 
 	/**
