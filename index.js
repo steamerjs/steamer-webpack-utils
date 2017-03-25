@@ -6,6 +6,7 @@ const fs = require('fs'),
 	  yargs = require('yargs');
 
 // Array.prototype.includes Polyfill
+/* istanbul ignore next */
 if (!Array.prototype.includes) {
 	Object.defineProperty(Array.prototype, 'includes', {
 	    value: function(searchElement, fromIndex) {
@@ -38,6 +39,32 @@ if (!Array.prototype.includes) {
 }
 
 module.exports = {
+
+	/**
+	 * @deprecated [will be deprecated in next major release]
+	 * get html files automatically
+	 * @param  {String} srcPath [directory contains html files]
+	 * @return {Array}          [array of html files path]
+	 */
+	getHtmlFile: function(srcPath) {
+
+		if (!fs.existsSync(srcPath)) {
+			return [];
+		}
+		
+		// read html filename from 
+		let srcFiles = fs.readdirSync(srcPath);
+
+		srcFiles = srcFiles.filter((item) => {
+		    return !!~item.indexOf('.html');
+		});
+
+		srcFiles = srcFiles.map((item) => {
+		    return item.replace('.html', '');
+		});
+
+		return srcFiles;
+	},
 	
 	/**
 	 * get html files automatically
@@ -46,7 +73,7 @@ module.exports = {
 	 *        - {Integer} level   [0 => current level, 1 => next level]
 	 * @return {Array}          [array of html files path]
 	 */
-	getHtmlFile: function(options) {
+	getHtmlEntry: function(options) {
 		let opt = options || {};
 
 		let level = opt.level || 0,
@@ -97,12 +124,33 @@ module.exports = {
 	},
 
 	/**
+	 * @deprecated [will be deprecated in next major release]
+	 * get sprite folder, only depth 1st folder matter
+	 * @param  {String} spritePath [sprite image parent folder]
+	 * @return {Array}             [sprite folder]
+	 */
+	getSpriteFolder: function(spritePath) {
+		
+		if (!fs.existsSync(spritePath)) {
+			return [];
+		}
+
+		let srcFiles = fs.readdirSync(spritePath);
+
+		srcFiles = srcFiles.filter((item) => {
+		    return !~item.indexOf('.');
+		});
+
+		return srcFiles;
+	},
+
+	/**
 	 * get sprite folder, only depth 1st folder matter
 	 * @param {Object} options
 	 *        - {String} spritePath [sprite image parent folder]
 	 * @return {Array}             [sprite folder]
 	 */
-	getSpriteFolder: function(options) {
+	getSpriteEntry: function(options) {
 		let opt = options || {};
 
 		let spritePath = opt.spritePath || "";
@@ -150,12 +198,12 @@ module.exports = {
 		//read js filename
 		let srcFiles = fs.readdirSync(path.join(srcPath, jsDirectory));
 		
-		srcFiles = srcFiles.filter((item, index) => {
+		srcFiles = srcFiles.filter((item) => {
 		    return item !== 'common';
 		});
 
-		srcFiles.map((item, index) => {
-			extensions.map((ext, index) => {
+		srcFiles.map((item) => {
+			extensions.map((ext) => {
 				let jsPath = path.join(srcPath, jsDirectory, item, 'main.' + ext);
 				if (fs.existsSync(jsPath)) {
 					jsFileArray['js/' + item] = [jsPath];

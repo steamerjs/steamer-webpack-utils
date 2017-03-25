@@ -11,7 +11,7 @@ const TEST_SRC = path.join(process.cwd(), "test/src");
 
 describe("html files", function() {
 
-	it("getHtmlFile -- level=0", function() {
+	it("getHtmlEntry -- level=0", function() {
 		let htmlFolder = path.join(TEST_SRC);
 
 		let result = [ 
@@ -29,15 +29,27 @@ describe("html files", function() {
 		    } 
 		];
 
-		expect(utils.getHtmlFile({srcPath : ""})).to.eql([]);
+		expect(utils.getHtmlEntry({srcPath : ""})).to.eql([]);
 
-		let htmlFies = utils.getHtmlFile({srcPath : htmlFolder});
+		let htmlFies = utils.getHtmlEntry({srcPath : htmlFolder});
+
+		expect(htmlFies).to.eql(result);
+	});
+
+	it("getHtmlFile -- level=0", function() {
+		let htmlFolder = path.join(TEST_SRC);
+
+		let result = [ 'comment', 'detail', 'index' ];
+
+		expect(utils.getHtmlFile()).to.eql([]);
+
+		let htmlFies = utils.getHtmlFile(htmlFolder);
 
 		expect(htmlFies).to.eql(result);
 	});
 
 
-	it("getHtmlFile -- level=1 & filterHtmlFile", function() {
+	it("getHtmlEntry -- level=1 & filterHtmlFile", function() {
 		let htmlFolder = path.join(TEST_SRC, "page");
 
 		let result = [ 
@@ -55,7 +67,7 @@ describe("html files", function() {
     		} 
     	];
 
-    	let htmlFiles = utils.getHtmlFile({srcPath: htmlFolder, level: 1});
+    	let htmlFiles = utils.getHtmlEntry({srcPath: htmlFolder, level: 1});
 
 		expect(htmlFiles).to.eql(result);
 
@@ -69,7 +81,7 @@ describe("html files", function() {
 });
 
 describe("sprites files", function() {
-	it("getSpriteFolder", function() {
+	it("getSpriteEntry", function() {
 		let spriteFolder = path.join(TEST_SRC, "css/sprites");
 
 		let result = [ 
@@ -83,9 +95,21 @@ describe("sprites files", function() {
     		} 
     	];
 
-    	expect(utils.getSpriteFolder({spritePath: ""})).to.eql([]);
+    	expect(utils.getSpriteEntry({spritePath: ""})).to.eql([]);
 
-    	let spriteFiles = utils.getSpriteFolder({spritePath: spriteFolder});
+    	let spriteFiles = utils.getSpriteEntry({spritePath: spriteFolder});
+
+    	expect(spriteFiles).to.eql(result);
+	});
+
+	it("getSpriteFolder", function() {
+		let spriteFolder = path.join(TEST_SRC, "css/sprites");
+
+		let result = [ 'btn', 'list' ];
+
+		expect(utils.getSpriteFolder()).to.eql([]);
+
+    	let spriteFiles = utils.getSpriteFolder(spriteFolder);
 
     	expect(spriteFiles).to.eql(result);
 	});

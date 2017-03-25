@@ -41,14 +41,14 @@ src
 
 若你想查看具体接口参数，请参阅 `index.js`
 
-* getHtmlFile
+* getHtmlEntry
 	- 自动获取 `html` 文件
 	- 参数 `Object`
 		- `option.srcPath` `{String}` 包含有 `html` 文件的目录
 		- `option.level` `{Integer}` 0 表示在当前目录寻找，1 表示在下一级目录寻找
 
 ```javascript
-var htmlFiles = getHtmlFile({
+var htmlFiles = getHtmlEntry({
 	srcPath: path.join(process.cwd(), "src")
 });
 
@@ -68,7 +68,7 @@ var htmlFiles = getHtmlFile({
     } 
 ]
 
-var htmlFiles = getHtmlFile({
+var htmlFiles = getHtmlEntry({
 	srcPath: path.join(process.cwd(), "src/page"),
 	level: 1
 });
@@ -91,7 +91,7 @@ var htmlFiles = getHtmlFile({
 ```
 
 * filterHtmlFile
-	- 筛选 `html` 文件, 通常与 `getHtmlFile` 一起使用
+	- 筛选 `html` 文件, 通常与 `getHtmlEntry` 一起使用
 	- 参数
 		- `htmlFiles`, `{Array}`, 所有 `html` 文件
 		- `selectedFiles`, `{Array}`, 选中的 `html` 文件
@@ -153,13 +153,13 @@ var htmlFiles = filterHtmlFile([
 ]
 ```
 
-*  getSpriteFolder
+*  getSpriteEntry
 	- 自动获取合图文件
 	- 参数
 		- `srcPath`, `{String}`, 源文件目录
 
 ```javascript
-var spriteFolders = getSpriteFolder('src/img/sprites');
+var spriteFolders = getSpriteEntry('src/img/sprites');
 
 // 返回
 [
@@ -172,20 +172,6 @@ var spriteFolders = getSpriteFolder('src/img/sprites');
 			path: 'path/src/img/sprites/list'
 	} 
 ]
-```
-
-* getJsFile
-	- 自动获取 `js` 文件，此 `api` 即将被弃用，请改用 `getJsEntry`
-
-```javascript
-var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
-
-// it returns
-{
-	'js/index': ['xxx/project/src/page/index/main.js'],
-	'js/spa': ['xxx/project/src/page/spa/main.js'], 
-	'js/detail': ['xxx/project/src/page/index/main.jsx'],
-}
 ```
 
 * getJsEntry
@@ -277,3 +263,38 @@ utils.filterJsFile({
 	- 成功信息
 	- 参数
 		- msg, {String}, 成功文本
+
+* getHtmlFile
+	- 自动获取 `html` 文件，此 `api` 即将被弃用，请改用 `getHtmlEntry`
+
+```javascript
+var htmlFiles = getHtmlFile(path.join(process.cwd(), "src"));
+
+// it returns
+["index", "spa", "detail"]
+```
+
+* getJsFile
+	- 自动获取 `js` 文件，此 `api` 即将被弃用，请改用 `getJsEntry`
+
+```javascript
+var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
+
+// 返回
+{
+	'js/index': ['xxx/project/src/page/index/main.js'],
+	'js/spa': ['xxx/project/src/page/spa/main.js'], 
+	'js/detail': ['xxx/project/src/page/index/main.jsx'],
+}
+```
+
+* getSpriteFolder
+	- 获取合图文件，此 `api` 即将被弃用，请改用 `getSpriteEntry`
+
+```javascript
+var spriteFolders = getSpriteFolder('src/img/sprites');
+
+// 返回
+['button', 'icon']
+```
+
