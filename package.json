@@ -1,18 +1,15 @@
 {
   "name": "steamer-webpack-utils",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "steamer-webpack-utils",
   "bin": "index.js",
   "main": "index.js",
   "scripts": {
-    
+    "lint": "eslint index.js",
+    "test": "npm run lint && mocha",
+    "cover": "istanbul cover _mocha",
+    "travis": "npm run cover -- --report lcovonly"
   },
-  "main": "index.js",
-  "files": [
-    "bin",
-    "libs",
-    "template"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SteamerTeam/steamer-webpack-utils.git"
@@ -27,9 +24,17 @@
   },
   "homepage": "https://github.com/SteamerTeam/steamer-webpack-utils#readme",
   "dependencies": {
-    
+    "chalk": "^1.1.3",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
-    
+    "codecov.io": "^0.1.6",
+    "coveralls": "^2.12.0",
+    "eslint": "^3.18.0",
+    "expect.js": "^0.3.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "sinon": "^2.1.0"
   }
 }
