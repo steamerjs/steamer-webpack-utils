@@ -47,7 +47,8 @@ module.exports = {
 	 * @return {Array}          [array of html files path]
 	 */
 	getHtmlFile: function(srcPath) {
-
+		console.log("steamer-webpack-utils: getHtmlFile will be deprecated in next major release! Please use getHtmlEntry instead");
+		
 		if (!fs.existsSync(srcPath)) {
 			return [];
 		}
@@ -130,6 +131,8 @@ module.exports = {
 	 * @return {Array}             [sprite folder]
 	 */
 	getSpriteFolder: function(spritePath) {
+
+		console.log("steamer-webpack-utils: getSpriteFolder will be deprecated in next major release! Please use getSpriteEntry instead");
 		
 		if (!fs.existsSync(spritePath)) {
 			return [];
