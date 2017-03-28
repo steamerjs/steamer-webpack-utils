@@ -1,6 +1,6 @@
 {
   "name": "steamer-webpack-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "steamer-webpack-utils",
   "bin": "index.js",
   "main": "index.js",

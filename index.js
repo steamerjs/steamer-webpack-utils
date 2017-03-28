@@ -2,8 +2,8 @@
 
 const fs = require('fs'),
 	  path = require('path'),
-	  chalk = require('chalk'),
-	  yargs = require('yargs');
+	  chalk = require('chalk');
+	  // yargs = require('yargs');
 
 // Array.prototype.includes Polyfill
 /* istanbul ignore next */
@@ -288,12 +288,36 @@ module.exports = {
 		var newJsFiles = {};
 
 		Object.keys(jsFiles).map((item) => {
+			// 完全匹配
 			if (selectedFiles.includes(item)) {
 				newJsFiles[item] = jsFiles[item];
 			}
+
+			// 部份匹配
+			selectedFiles.forEach((file) => {
+				if (!!~item.indexOf(file)) {
+					newJsFiles[item] = jsFiles[item];
+				}
+			});
 		});
 
 		return newJsFiles;
+	},
+
+	/**
+	 * select js files for compilation by npm command
+	 * @param  {Object} jsFiles       [all js files]
+	 * @return {Array}               [selected js files in certain format]
+	 */
+	filterJsFileByCmd: function(jsFiles) {
+		let npmArgv = this.getNpmArgvs();
+
+		if (npmArgv.entry) {
+		    let entries = npmArgv.entry.split(",");
+		    jsFiles =  this.filterJsFile(jsFiles, entries);
+		}
+
+		return jsFiles;
 	},
 
 	/**
@@ -309,11 +333,28 @@ module.exports = {
 		}
 		
 		htmlFiles = htmlFiles.filter((item) => {
+			// 完全匹配
 			if (selectedFiles.includes(item.key)) {
 				return item;
 			}
 		});
 
+		return htmlFiles;
+	},
+
+	/**
+	 * select html files for compilation by npm command
+	 * @param  {Array} htmlFiles     [all html files]
+	 * @return {Array}               [selected html files in certain format]
+	 */
+	filterHtmlFileByCmd: function(htmlFiles) {
+		let npmArgv = this.getNpmArgvs();
+
+		if (npmArgv.entry) {
+		    let entries = npmArgv.entry.split(",");
+		    htmlFiles = this.filterHtmlFile(htmlFiles, entries);
+		}
+		
 		return htmlFiles;
 	},
 
@@ -329,9 +370,12 @@ module.exports = {
 	},
 
 	/**
-	 * 
+	 * get command line argvs
+	 * @param  {Array} argvs  [original argvs array]
+	 * @return {Object}       [parsed result]
 	 */
 	getArgvs: function(argvs) {
+		var yargs = require('yargs');
 
 		if (argvs) {
 			return yargs(argvs).argv;
@@ -339,6 +383,14 @@ module.exports = {
 		else {
 			return yargs.argv;
 		}
+	},
+
+	/**
+	 * get npm command line argvs
+	 * @return {Object} [parsed result]
+	 */
+	getNpmArgvs: function() {
+		return this.getArgvs(JSON.parse(process.env.npm_config_argv || "[]").original);
 	},
 
 	/**

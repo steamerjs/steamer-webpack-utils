@@ -9,6 +9,74 @@ const path = require('path'),
 
 const TEST_SRC = path.join(process.cwd(), "test/src");
 
+describe("others", function() {
+
+	it("addPlugins", function() {
+		let conf = {
+			plugins: []
+		};
+
+		let plugin = function(opt) {
+			return opt;
+		};
+
+		utils.addPlugins(conf, plugin, {abc: 123});
+
+		expect(conf).to.eql({ plugins: [ { abc: 123 } ] });
+	});
+
+	it("getArgvs - without parameter", function() {
+		var processArgvs = process.argv;
+		process.argv = ["node", "mocha", "--a", "2"];
+
+		let argv = utils.getArgvs();
+
+		let result = { 
+			_: [],
+			a: 2
+	  	};
+
+	  	delete argv["$0"];
+
+	  	expect(argv).to.eql(result);
+
+	  	process.argv = processArgvs;
+
+	});
+
+	it("getArgvs - with parameter", function() {
+
+		let setArgv = [
+			'1',
+			'2',
+			"-a=123",
+			"--ab=123",
+			"-b 12",
+			"--bc",
+			"123",
+		];
+		
+		let argv = utils.getArgvs(setArgv);
+		delete argv["$0"];
+
+		expect(argv).to.eql({ _: [ 1, 2 ], a: 123, ab: 123, b: ' 12', bc: 123 });
+		
+	});
+
+	it("getNpmArgvs", function() {
+
+		let npmConfig = process.env.npm_config_argv;
+		process.env.npm_config_argv = '{"remain":[],"cooked":["run","dev","--entry","index"],"original":["run","dev","--entry=index"]}';
+		
+		let npmArgvs = utils.getNpmArgvs();
+
+		expect(npmArgvs.entry).to.eql('index');
+
+		process.env.npm_config_argv = npmConfig;
+
+	});
+});
+
 describe("html files", function() {
 
 	it("getHtmlEntry -- level=0", function() {
@@ -76,6 +144,32 @@ describe("html files", function() {
 		result = result.slice(0, 1);
 
 		expect(utils.filterHtmlFile(htmlFiles, ['comment'])).to.eql(result);
+	});
+
+	it("getHtmlEntry - level=1 & filterHtmlFileByCmd", function() {
+		let npmConfig = process.env.npm_config_argv;
+		process.env.npm_config_argv = '{"remain":[],"cooked":["run","dev","--entry","index,detail"],"original":["run","dev","--entry=index,detail"]}';
+
+		let htmlFolder = path.join(TEST_SRC, "page");
+
+		let result = [ 
+  			{ 
+  				key: 'detail',
+    			path: path.join(htmlFolder, '/detail/index.html') 
+    		},
+  			{ 
+  				key: 'index',
+    			path: path.join(htmlFolder, '/index/index.html') 
+    		} 
+    	];
+
+  		let htmlFiles = utils.getHtmlEntry({srcPath: htmlFolder, level: 1});
+
+  		htmlFiles = utils.filterHtmlFileByCmd(htmlFiles);
+
+  		expect(htmlFiles).to.eql(result);
+
+		process.env.npm_config_argv = npmConfig;
 	});
 
 });
@@ -176,58 +270,36 @@ describe("js files", function() {
 
   		expect(utils.filterJsFile(jsFiles, ["js/detail"])).to.eql(result);
 
+  		expect(utils.filterJsFile(jsFiles, ["detail"])).to.eql(result);
+
 	});
 
+	it("getJsEntry - level=1 & filterJsFileByCmd", function() {
+		let npmConfig = process.env.npm_config_argv;
+		process.env.npm_config_argv = '{"remain":[],"cooked":["run","dev","--entry","index,detail"],"original":["run","dev","--entry=index,detail"]}';
 
-});
-
-describe("others", function() {
-
-	it("addPlugins", function() {
-		let conf = {
-			plugins: []
-		};
-
-		let plugin = function(opt) {
-			return opt;
-		};
-
-		utils.addPlugins(conf, plugin, {abc: 123});
-
-		expect(conf).to.eql({ plugins: [ { abc: 123 } ] });
-	});
-
-	it("getArgvs - without parameter", function() {
-		let argv = utils.getArgvs();
+		let jsFolder = path.join(TEST_SRC, "page");
 
 		let result = { 
-			_: [],
-	  	};
+  			'js/detail': [ path.join(TEST_SRC, 'page/detail/index.js') ],
+  			'js/index': [ path.join(TEST_SRC, 'page/index/index.jsx') ] 
+  		};
 
-	  	delete argv["$0"];
+  		let jsFiles = utils.getJsEntry({
+  			srcPath: jsFolder,
+  			fileName: "index",
+  			extensions: ["js", "jsx"],
+  			keyPrefix: "js/",
+  			level: 1
+  		});
 
-	  	expect(argv).to.eql(result);
+  		jsFiles = utils.filterJsFileByCmd(jsFiles);
 
+  		expect(jsFiles).to.eql(result);
+
+		process.env.npm_config_argv = npmConfig;
 	});
 
-	it("getArgvs - with parameter", function() {
-
-		let setArgv = [
-			'1',
-			'2',
-			"-a=123",
-			"--ab=123",
-			"-b 12",
-			"--bc",
-			"123",
-		];
-		
-		let argv = utils.getArgvs(setArgv);
-		delete argv["$0"];
-
-		expect(argv).to.eql({ _: [ 1, 2 ], a: 123, ab: 123, b: ' 12', bc: 123 });
-		
-	});
 });
 
 describe("print message:", function() {

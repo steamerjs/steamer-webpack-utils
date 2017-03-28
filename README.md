@@ -224,7 +224,7 @@ utils.filterJsFile({
 	["js/index"]
 );
 
-// finally returns
+// 最后返回如下，如果 selectedFiles 值为 ["index"]，结果一样，因为这里允许部份匹配
 { 
 	'js/index': [ 'path/src/page/index/index.js' ] 
 }
@@ -243,6 +243,16 @@ utils.filterJsFile({
 	- 获取命令行参数
 	- 参数
 		- `argvs`, `{Object}`, 具体参数，可留空，若留空，则自动返回 `process.argv` 被处理的参数
+
+* getNpmArgvs
+	- 获取npm命令行参数
+```javascript
+// 如 npm start -- --entry=index
+
+var npmArgvs = getNpmArgvs();
+
+// npmArgvs.entry 值为 "index"
+```
 
 * error
 	- 报错信息
