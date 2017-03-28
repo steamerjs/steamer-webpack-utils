@@ -136,7 +136,7 @@ var htmlFiles = filterHtmlFile([
     } 
 ]);
 
-// it returns the original array
+// 它返回原有的数组
 [ 
 	{ 
 		key: 'comment',
@@ -147,6 +147,39 @@ var htmlFiles = filterHtmlFile([
     	path: 'path/src/page/detail/index.html'
     },
   	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+]
+```
+
+* filterHtmlFileByCmd
+	- 根据 npm 命令进行 html 文件的筛选
+	- 参数
+		- htmlFiles, {Array}, 所有 `html` 文件
+
+```javascript
+// 如果你使用以下命令启动你的脚本，npm run start -- --entry=index
+var htmlFiles = [ 
+	{ 
+		key: 'comment',
+    	path: 'path/src/page/comment/index.html'
+    },
+  	{ 
+  		key: 'detail',
+    	path: 'path/src/page/detail/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+];
+
+utils.filterHtmlFileByCmd(htmlFiles);
+
+// 返回值如下
+[
+	{
   		key: 'index',
     	path: 'path/src/page/index/index.html'
     } 
@@ -217,7 +250,7 @@ var jsFiles = utils.getJsEntry({
 
 ```javascript
 utils.filterJsFile({ 
-	'js/comment': [ 'path/src/page/comment/index.js' ],
+		'js/comment': [ 'path/src/page/comment/index.js' ],
 		'js/detail': ['path/src/page/detail/index.js' ],
 		'js/index': [ 'path/src/page/index/index.js' ] 
 	}, 
@@ -230,6 +263,28 @@ utils.filterJsFile({
 }
 
 // 如果 selectedFiles 参数被忽略，则完整返回
+```
+
+* filterJsFileByCmd
+	- 根据 npm 命令进行 js 文件的筛选
+	- 参数
+		- jsFiles, {Object}, 所有 `js` 文件
+
+```javascript
+// 如果你使用以下命令启动你的脚本，npm run start -- --entry=index
+
+var jsFiles = { 
+	'js/comment': [ 'path/src/page/comment/index.js' ],
+	'js/detail': ['path/src/page/detail/index.js' ],
+	'js/index': [ 'path/src/page/index/index.js' ] 
+};
+
+jsFiles = utils.filterJsFileByCmd(jsFiles);
+
+// 返回值为
+{ 
+	'js/index': [ 'path/src/page/index/index.js' ] 
+}
 ```
 
 * addPlugins
