@@ -287,6 +287,31 @@ jsFiles = utils.filterJsFileByCmd(jsFiles);
 }
 ```
 
+* walkAndReplace
+	- 给目录内文件内容进行替换
+	- 参数
+		- folder, {String}, 目录路径
+		- extensions, {Array}, 需要替换的文件后缀，如为空数组，则所有文件都要替换
+		- replaceObj, {Object}, 需要替换的标签内容
+
+```javascript
+// 内容标签格式一律为 <% key %>, 以下内容是将目录内所有 js 和 html 文件中的 <% title %> 标签内容替换为 index
+
+utils.walkAndReplace(srcFolder, [".js", ".html"], {title: 'index'});
+
+```
+
+* copyTemplate
+	- 将模板拷贝到指定位置
+	- 参数
+		- srcFolder, {String}, 源目录
+		- destFolder, {String}, 目标目录
+```javascript
+
+utils.copyTemplate(TEST_SRC, TEST_DIST);
+
+```
+
 * addPlugins
 	- 给 `webpack` 配置添加 插件
 	

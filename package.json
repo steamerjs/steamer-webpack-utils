@@ -25,6 +25,8 @@
   "homepage": "https://github.com/SteamerTeam/steamer-webpack-utils#readme",
   "dependencies": {
     "chalk": "^1.1.3",
+    "fs-extra": "^2.1.2",
+    "klaw-sync": "^1.1.2",
     "yargs": "^7.0.2"
   },
   "devDependencies": {

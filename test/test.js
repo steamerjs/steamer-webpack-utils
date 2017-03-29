@@ -1,13 +1,15 @@
 "use strict";
 
 const path = require('path'),
-	  fs = require('fs'),
+	  fs = require('fs-extra'),
 	  expect = require('expect.js'),
 	  sinon = require('sinon'),
 	  chalk = require('chalk'),
-	  utils = require("../index");
+	  utils = require("../index"),
+	  klawSync = require('klaw-sync');
 
-const TEST_SRC = path.join(process.cwd(), "test/src");
+const TEST_SRC = path.join(process.cwd(), "test/src"),
+	  TEST_DIST = path.join(process.cwd(), "test/dist");
 
 describe("others", function() {
 
@@ -32,11 +34,10 @@ describe("others", function() {
 		let argv = utils.getArgvs();
 
 		let result = { 
-			_: [],
-			a: 2
+			_: ['node', 'mocha'],
+			a: 2,
+			'$0': 'mocha'
 	  	};
-
-	  	delete argv["$0"];
 
 	  	expect(argv).to.eql(result);
 
@@ -73,6 +74,55 @@ describe("others", function() {
 		expect(npmArgvs.entry).to.eql('index');
 
 		process.env.npm_config_argv = npmConfig;
+
+	});
+
+	it("walkAndReplace", function() {
+
+		var replaceObj = {title: "list", body: "hello world!"};
+
+		var readFileSyncStub = sinon.stub(fs, 'writeFileSync').callsFake(function(filepath, content) {
+			let rawContent = fs.readFileSync(filepath, "utf-8");
+
+			Object.keys(replaceObj).forEach((key) => {
+				rawContent = rawContent.replace(new RegExp("<% " + key + " %>", "gi"), function() {
+					return replaceObj[key];
+				});
+			});
+
+			expect(content).to.eql(rawContent);
+			
+		});
+
+		let srcFolder = path.join(TEST_SRC);
+
+		utils.walkAndReplace(srcFolder, [".js", ".html"], replaceObj);
+
+		readFileSyncStub.restore();
+
+	});
+
+	it("copyTemplate - folder exists", function() {
+
+		var existsSyncStub = sinon.stub(fs, "existsSync").callsFake(function() {
+			return true;
+		});
+
+		expect(function() {
+			utils.copyTemplate("src", "dest");
+		}).to.throwError();
+
+		existsSyncStub.restore();
+
+	});
+
+	it("copyTemplate - folder exists", function() {
+
+		utils.copyTemplate(TEST_SRC, TEST_DIST);
+
+		expect(fs.existsSync(TEST_DIST)).to.be(true);
+
+		fs.removeSync(TEST_DIST);
 
 	});
 });
@@ -147,8 +197,9 @@ describe("html files", function() {
 	});
 
 	it("getHtmlEntry - level=1 & filterHtmlFileByCmd", function() {
-		let npmConfig = process.env.npm_config_argv;
-		process.env.npm_config_argv = '{"remain":[],"cooked":["run","dev","--entry","index,detail"],"original":["run","dev","--entry=index,detail"]}';
+		var filterByCmdStub = sinon.stub(utils, "getArgvs").callsFake(function() {
+			return { _: [ 'run', 'dev' ], entry: 'index,detail', '$0': 'tools/script.js' };
+		});
 
 		let htmlFolder = path.join(TEST_SRC, "page");
 
@@ -169,7 +220,8 @@ describe("html files", function() {
 
   		expect(htmlFiles).to.eql(result);
 
-		process.env.npm_config_argv = npmConfig;
+  		filterByCmdStub.restore();
+
 	});
 
 });
@@ -275,8 +327,10 @@ describe("js files", function() {
 	});
 
 	it("getJsEntry - level=1 & filterJsFileByCmd", function() {
-		let npmConfig = process.env.npm_config_argv;
-		process.env.npm_config_argv = '{"remain":[],"cooked":["run","dev","--entry","index,detail"],"original":["run","dev","--entry=index,detail"]}';
+
+		var filterByCmdStub = sinon.stub(utils, "getArgvs").callsFake(function() {
+			return { _: [ 'run', 'dev' ], entry: 'index,detail', '$0': 'tools/script.js' };
+		});
 
 		let jsFolder = path.join(TEST_SRC, "page");
 
@@ -297,7 +351,7 @@ describe("js files", function() {
 
   		expect(jsFiles).to.eql(result);
 
-		process.env.npm_config_argv = npmConfig;
+		filterByCmdStub.restore();
 	});
 
 });

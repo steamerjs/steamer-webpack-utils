@@ -1,9 +1,9 @@
 'use strict';
 
-const fs = require('fs'),
+const fs = require('fs-extra'),
 	  path = require('path'),
-	  chalk = require('chalk');
-	  // yargs = require('yargs');
+	  chalk = require('chalk'),
+	  klawSync = require('klaw-sync');
 
 // Array.prototype.includes Polyfill
 /* istanbul ignore next */
@@ -310,10 +310,10 @@ module.exports = {
 	 * @return {Array}               [selected js files in certain format]
 	 */
 	filterJsFileByCmd: function(jsFiles) {
-		let npmArgv = this.getNpmArgvs();
+		let argvs = this.getNpmArgvs();
 
-		if (npmArgv.entry) {
-		    let entries = npmArgv.entry.split(",");
+		if (argvs.entry) {
+		    let entries = argvs.entry.split(",");
 		    jsFiles =  this.filterJsFile(jsFiles, entries);
 		}
 
@@ -348,16 +348,61 @@ module.exports = {
 	 * @return {Array}               [selected html files in certain format]
 	 */
 	filterHtmlFileByCmd: function(htmlFiles) {
-		let npmArgv = this.getNpmArgvs();
+		let argvs = this.getNpmArgvs();
 
-		if (npmArgv.entry) {
-		    let entries = npmArgv.entry.split(",");
+		if (argvs.entry) {
+		    let entries = argvs.entry.split(",");
 		    htmlFiles = this.filterHtmlFile(htmlFiles, entries);
 		}
 		
 		return htmlFiles;
 	},
 
+	/**
+	 * walk files and replace file string
+	 * @param  {String} folder   [src folder]
+	 * @param  {Array}  extensions  [include which extensions]
+	 * @param  {Object}  replaceObj  [name need to be replaced]
+	 */
+	walkAndReplace: function(folder, extensions, replaceObj) {
+
+		var extensions = extensions || [],
+			replaceObj = replaceObj || {};
+
+		var files = klawSync(folder, {nodir: true});
+
+		if (extensions.length) {
+			files = files.filter((item) => {
+				let ext = path.extname(item.path);
+				return extensions.includes(ext);
+			});
+		}
+
+		files.forEach((file) => {
+			let content = fs.readFileSync(file.path, "utf-8");
+
+			Object.keys(replaceObj).forEach((key) => {
+				content = content.replace(new RegExp("<% " + key + " %>", "ig"), function(match) {
+					return replaceObj[key];
+				});
+			});
+
+			fs.writeFileSync(file.path, content, "utf-8");
+		});
+	},
+
+	/**
+	 * copy template to specific place
+	 * @param  {String} srcFolder  [src folder]
+	 * @param  {String} destFolder [destination folder]
+	 */
+	copyTemplate: function(srcFolder, destFolder) {
+		if (fs.existsSync(destFolder)) {
+			throw new Error(destFolder + " exists");
+		}
+
+		fs.copySync(srcFolder, destFolder);
+	},
 
 	/**
 	 * add plugin for webpack config
@@ -381,7 +426,7 @@ module.exports = {
 			return yargs(argvs).argv;
 		} 
 		else {
-			return yargs.argv;
+			return yargs(process.argv).argv;
 		}
 	},
 
