@@ -78,7 +78,8 @@ module.exports = {
 		let opt = options || {};
 
 		let level = opt.level || 0,
-			srcPath = opt.srcPath || "";
+			srcPath = opt.srcPath || "",
+			keyType = opt.keyType || "folderName";
 
 		if (!fs.existsSync(srcPath)) {
 			return [];
@@ -112,7 +113,14 @@ module.exports = {
 
 			srcFiles = srcFiles.map((item) => {
 			    let obj = {};
-			    obj.key = folder || item.replace('.html', '');
+
+			    if (keyType === 'fileName') {
+			    	obj.key = item.replace('.html', '');
+			    }
+			    else {
+			    	obj.key = folder || item.replace('.html', '');
+			    }
+
 			    obj.path = path.join(srcPath, folder, item);
 
 			    htmlFiles.push(obj);

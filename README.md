@@ -19,13 +19,14 @@ src
  |   |    |-- main.js
  |   |    |-- index.html
  |   |     
- |   |-- spa
+ |   |-- comment
  |   |    |-- main.js
  |   |    |-- index.html
  |   |
  |   |-- detail
  |        |-- main.jsx
  |        |-- index.html
+ |        |-- index1.html
  |
  |-- img
  |    |-- sprites
@@ -34,7 +35,7 @@ src
  |
  |
  |-- index.html
- |-- spa.html
+ |-- comment.html
  |-- detail.html
  |-- main.js
 ```
@@ -46,6 +47,7 @@ src
 	- 参数 `{Object}`
 		- `option.srcPath` `{String}` 包含有 `html` 文件的目录
 		- `option.level` `{Integer}` 0 表示在当前目录寻找，1 表示在下一级目录寻找
+		- `options.keyType` `{String}` 返回 `key` 值的类型， 默认 `folderName` (用父文件夹名作 `key`), 其它值 `fileName`(用文件名作为 `key`)
 
 ```javascript
 var htmlFiles = getHtmlEntry({
@@ -82,6 +84,32 @@ var htmlFiles = getHtmlEntry({
   	{ 
   		key: 'detail',
     	path: 'path/src/page/detail/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/index/index.html'
+    } 
+]
+
+var htmlFiles = getHtmlEntry({
+	srcPath: path.join(process.cwd(), "src/page"),
+	level: 1,
+	keyType: 'fileName',
+});
+// 返回
+
+[ 
+	{ 
+		key: 'index',
+    	path: 'path/src/page/comment/index.html'
+    },
+  	{ 
+  		key: 'index',
+    	path: 'path/src/page/detail/index.html'
+    },
+    { 
+  		key: 'index1',
+    	path: 'path/src/page/detail/index1.html'
     },
   	{ 
   		key: 'index',
@@ -361,7 +389,7 @@ var npmArgvs = getNpmArgvs();
 var htmlFiles = getHtmlFile(path.join(process.cwd(), "src"));
 
 // it returns
-["index", "spa", "detail"]
+["index", "comment", "detail"]
 ```
 
 * getJsFile
@@ -373,7 +401,7 @@ var jsFiles = getJsFile('src', 'page', 'main', ['js', 'jsx']);
 // 返回
 {
 	'js/index': ['xxx/project/src/page/index/main.js'],
-	'js/spa': ['xxx/project/src/page/spa/main.js'], 
+	'js/comment': ['xxx/project/src/page/comment/main.js'], 
 	'js/detail': ['xxx/project/src/page/index/main.jsx'],
 }
 ```

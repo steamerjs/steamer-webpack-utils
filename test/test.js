@@ -172,11 +172,19 @@ describe("html files", function() {
 
 		let result = [ 
 			{ 
-				key: 'comment',
+				key: 'index',
     			path: path.join(htmlFolder, '/comment/index.html')
     		},
+    		{ 
+				key: 'index1',
+    			path: path.join(htmlFolder, '/comment/index1.html')
+    		},
+    		{ 
+				key: 'index2',
+    			path: path.join(htmlFolder, '/comment/index2.html')
+    		},
   			{ 
-  				key: 'detail',
+  				key: 'index',
     			path: path.join(htmlFolder, '/detail/index.html') 
     		},
   			{ 
@@ -185,15 +193,15 @@ describe("html files", function() {
     		} 
     	];
 
-    	let htmlFiles = utils.getHtmlEntry({srcPath: htmlFolder, level: 1});
+    	let htmlFiles = utils.getHtmlEntry({srcPath: htmlFolder, level: 1, keyType: 'fileName'});
 
 		expect(htmlFiles).to.eql(result);
 
 		expect(utils.filterHtmlFile(htmlFiles)).to.eql(result);
 
-		result = result.slice(0, 1);
+		result = result.slice(2, 3);
 
-		expect(utils.filterHtmlFile(htmlFiles, ['comment'])).to.eql(result);
+		expect(utils.filterHtmlFile(htmlFiles, ['index2'])).to.eql(result);
 	});
 
 	it("getHtmlEntry - level=1 & filterHtmlFileByCmd", function() {
