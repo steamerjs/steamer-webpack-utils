@@ -24,19 +24,19 @@
   },
   "homepage": "https://github.com/SteamerTeam/steamer-webpack-utils#readme",
   "dependencies": {
-    "chalk": "^1.1.3",
-    "fs-extra": "^2.1.2",
-    "klaw-sync": "^1.1.2",
-    "yargs": "^7.0.2"
+    "chalk": "^2.0.1",
+    "fs-extra": "^3.0.1",
+    "klaw-sync": "^2.1.0",
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
     "codecov.io": "^0.1.6",
-    "coveralls": "^2.12.0",
-    "eslint": "^3.18.0",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.2.0",
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
+    "mocha": "^3.4.2",
     "mocha-lcov-reporter": "^1.3.0",
-    "sinon": "^2.1.0"
+    "sinon": "^2.3.6"
   }
 }
