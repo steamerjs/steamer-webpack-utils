@@ -2,9 +2,9 @@
 steamer 脚手架 webpack utils 函数
 
 [![NPM Version](https://img.shields.io/npm/v/steamer-webpack-utils.svg?style=flat)](https://www.npmjs.com/package/steamer-webpack-utils)
-[![Travis](https://img.shields.io/travis/SteamerTeam/steamer-webpack-utils.svg)](https://travis-ci.org/SteamerTeam/steamer-webpack-utils)
-[![Deps](https://david-dm.org/SteamerTeam/steamer-webpack-utils.svg)](https://david-dm.org/SteamerTeam/steamer-webpack-utils)
-[![Coverage](https://img.shields.io/coveralls/SteamerTeam/steamer-webpack-utils.svg)](https://coveralls.io/github/SteamerTeam/steamer-webpack-utils)
+[![Travis](https://img.shields.io/travis/steamerjs/steamer-webpack-utils.svg)](https://travis-ci.org/steamerjs/steamer-webpack-utils)
+[![Deps](https://david-dm.org/steamerjs/steamer-webpack-utils.svg)](https://david-dm.org/steamerjs/steamer-webpack-utils)
+[![Coverage](https://img.shields.io/coveralls/steamerjs/steamer-webpack-utils.svg)](https://coveralls.io/github/steamerjs/steamer-webpack-utils)
 
 
 ### 接口函数
