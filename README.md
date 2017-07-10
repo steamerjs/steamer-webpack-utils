@@ -42,6 +42,8 @@ src
 
 若你想查看具体接口参数，请参阅 `index.js`
 
+* fs 具备 [fs-extra](https://github.com/jprichardson/node-fs-extra) 的能力
+
 * getHtmlEntry
 	- 自动获取 `html` 文件
 	- 参数 `{Object}`
