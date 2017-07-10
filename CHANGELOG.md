@@ -1,3 +1,6 @@
+## v1.1.0
+	- expose fs-extra capability
+
 ## v1.0.2
 	- add keyType for getHtmlEntry
 
