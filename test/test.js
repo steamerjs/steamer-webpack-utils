@@ -135,16 +135,16 @@ describe("html files", function() {
 		let result = [ 
 			{ 
 				key: 'comment',
-		    	path: path.join(htmlFolder, 'comment.html') 
-		    },
-		  	{ 
-		  		key: 'detail',
-		    	path: path.join(htmlFolder, 'detail.html')
-		    },
-		  	{ 
-		  		key: 'index',
-		    	path: path.join(htmlFolder, 'index.html')
-		    } 
+				path: path.join(htmlFolder, 'comment.html') 
+			},
+			{ 
+				key: 'detail',
+				path: path.join(htmlFolder, 'detail.html')
+			},
+			{ 
+				key: 'index',
+				path: path.join(htmlFolder, 'index.html')
+			} 
 		];
 
 		expect(utils.getHtmlEntry({srcPath : ""})).to.eql([]);
@@ -173,27 +173,31 @@ describe("html files", function() {
 		let result = [ 
 			{ 
 				key: 'index',
-    			path: path.join(htmlFolder, '/comment/index.html')
-    		},
-    		{ 
+				path: path.join(htmlFolder, '/comment/index.html')
+			},
+			{ 
 				key: 'index1',
-    			path: path.join(htmlFolder, '/comment/index1.html')
-    		},
-    		{ 
+				path: path.join(htmlFolder, '/comment/index1.html')
+			},
+			{ 
 				key: 'index2',
-    			path: path.join(htmlFolder, '/comment/index2.html')
-    		},
-  			{ 
-  				key: 'index',
-    			path: path.join(htmlFolder, '/detail/index.html') 
-    		},
-  			{ 
-  				key: 'index',
-    			path: path.join(htmlFolder, '/index/index.html') 
-    		} 
-    	];
+				path: path.join(htmlFolder, '/comment/index2.html')
+			},
+			{ 
+				key: 'index',
+				path: path.join(htmlFolder, '/detail/index.html') 
+			},
+			{ 
+				key: 'index',
+				path: path.join(htmlFolder, '/detail-m/index.html') 
+			},
+			{ 
+				key: 'index',
+				path: path.join(htmlFolder, '/index/index.html') 
+			} 
+		];
 
-    	let htmlFiles = utils.getHtmlEntry({srcPath: htmlFolder, level: 1, keyType: 'fileName'});
+		let htmlFiles = utils.getHtmlEntry({srcPath: htmlFolder, level: 1, keyType: 'fileName'});
 
 		expect(htmlFiles).to.eql(result);
 
@@ -273,15 +277,16 @@ describe("js files", function() {
 	it("getJsFile", function() {
 		let result = { 
 			'js/comment': [ path.join(TEST_SRC, 'page/comment/main.js') ],
-  			'js/detail': [ path.join(TEST_SRC, 'page/detail/main.js') ],
-  			'js/index': [ path.join(TEST_SRC, 'page/index/main.js') ] 
-  		};
+			'js/detail': [ path.join(TEST_SRC, 'page/detail/main.js') ],
+			'js/detail-m': [ path.join(TEST_SRC, 'page/detail-m/main.js') ],
+			'js/index': [ path.join(TEST_SRC, 'page/index/main.js') ] 
+		};
 
-  		expect(utils.getJsFile("", 'page', 'main', ['js', 'jsx'])).to.eql([]);
-  		
-  		let jsFiles = utils.getJsFile(TEST_SRC, 'page', 'main', ['js', 'jsx']);
+		expect(utils.getJsFile("", 'page', 'main', ['js', 'jsx'])).to.eql([]);
+		
+		let jsFiles = utils.getJsFile(TEST_SRC, 'page', 'main', ['js', 'jsx']);
 
-  		expect(jsFiles).to.eql(result);
+		expect(jsFiles).to.eql(result);
 	});
 
 	it("getJsEntry - level=0", function() {
@@ -309,55 +314,58 @@ describe("js files", function() {
 
 		let result = { 
 			'js/comment': [ path.join(TEST_SRC, 'page/comment/index.js') ],
-  			'js/detail': [ path.join(TEST_SRC, 'page/detail/index.js') ],
-  			'js/index': [ path.join(TEST_SRC, 'page/index/index.jsx') ] 
-  		};
+			'js/detail': [ path.join(TEST_SRC, 'page/detail/index.js') ],
+			'js/detail-m': [ path.join(TEST_SRC, 'page/detail-m/index.js') ],
+			'js/index': [ path.join(TEST_SRC, 'page/index/index.jsx') ] 
+		};
 
-  		let jsFiles = utils.getJsEntry({
-  			srcPath: jsFolder,
-  			fileName: "index",
-  			extensions: ["js", "jsx"],
-  			keyPrefix: "js/",
-  			level: 1
-  		});
+		let jsFiles = utils.getJsEntry({
+			srcPath: jsFolder,
+			fileName: "index",
+			extensions: ["js", "jsx"],
+			keyPrefix: "js/",
+			level: 1
+		});
 
-  		expect(jsFiles).to.eql(result);
+		expect(jsFiles).to.eql(result);
 
-  		expect(utils.filterJsFile(jsFiles)).to.eql(result);
+		expect(utils.filterJsFile(jsFiles)).to.eql(result);
 
-  		delete result['js/comment'];
-  		delete result['js/index'];
+		delete result['js/comment'];
+		delete result['js/index'];
 
-  		expect(utils.filterJsFile(jsFiles, ["js/detail"])).to.eql(result);
+		expect(utils.filterJsFile(jsFiles, ["js/detail*"])).to.eql(result);
 
-  		expect(utils.filterJsFile(jsFiles, ["detail"])).to.eql(result);
+		delete result['js/detail-m'];
 
+		expect(utils.filterJsFile(jsFiles, ["js/detail"])).to.eql(result);
 	});
 
 	it("getJsEntry - level=1 & filterJsFileByCmd", function() {
 
 		var filterByCmdStub = sinon.stub(utils, "getArgvs").callsFake(function() {
-			return { _: [ 'run', 'dev' ], entry: 'index,detail', '$0': 'tools/script.js' };
+			return { _: [ 'run', 'dev' ], entry: 'js/index,js/detail*', '$0': 'tools/script.js' };
 		});
 
 		let jsFolder = path.join(TEST_SRC, "page");
 
 		let result = { 
-  			'js/detail': [ path.join(TEST_SRC, 'page/detail/index.js') ],
-  			'js/index': [ path.join(TEST_SRC, 'page/index/index.jsx') ] 
-  		};
+			'js/detail': [ path.join(TEST_SRC, 'page/detail/index.js') ],
+			'js/detail-m': [ path.join(TEST_SRC, 'page/detail-m/index.js') ],
+			'js/index': [ path.join(TEST_SRC, 'page/index/index.jsx') ]
+		};
 
-  		let jsFiles = utils.getJsEntry({
-  			srcPath: jsFolder,
-  			fileName: "index",
-  			extensions: ["js", "jsx"],
-  			keyPrefix: "js/",
-  			level: 1
-  		});
+		let jsFiles = utils.getJsEntry({
+			srcPath: jsFolder,
+			fileName: "index",
+			extensions: ["js", "jsx"],
+			keyPrefix: "js/",
+			level: 1
+		});
 
-  		jsFiles = utils.filterJsFileByCmd(jsFiles);
+		jsFiles = utils.filterJsFileByCmd(jsFiles);
 
-  		expect(jsFiles).to.eql(result);
+		expect(jsFiles).to.eql(result);
 
 		filterByCmdStub.restore();
 	});
