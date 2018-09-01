@@ -1,3 +1,6 @@
+## v1.1.1
+	- support glob
+
 ## v1.1.0
 	- expose fs-extra capability
 
