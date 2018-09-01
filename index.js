@@ -1,10 +1,11 @@
 'use strict';
 
-const fs = require('fs-extra'),
-	  path = require('path'),
-	  chalk = require('chalk'),
-	  polyfill = require('./libs/polyfill'),
-	  klawSync = require('klaw-sync');
+const fs = require('fs-extra');
+const path = require('path');
+const chalk = require('chalk');
+const polyfill = require('./libs/polyfill');
+const klawSync = require('klaw-sync');
+const minimatch = require('minimatch');
 
 module.exports = {
 
@@ -269,14 +270,8 @@ module.exports = {
 		var newJsFiles = {};
 
 		Object.keys(jsFiles).map((item) => {
-			// 完全匹配
-			if (selectedFiles.includes(item)) {
-				newJsFiles[item] = jsFiles[item];
-			}
-
-			// 部份匹配
-			selectedFiles.forEach((file) => {
-				if (!!~item.indexOf(file)) {
+			selectedFiles.forEach((pattern) => {
+				if (minimatch(item, pattern)) {
 					newJsFiles[item] = jsFiles[item];
 				}
 			});
@@ -308,16 +303,17 @@ module.exports = {
 	 * @return {Array}               [selected html files in certain format]
 	 */
 	filterHtmlFile: function(htmlFiles, selectedFiles) {
-
 		if (!selectedFiles || !selectedFiles.length) {
 			return htmlFiles;
 		}
 		
 		htmlFiles = htmlFiles.filter((item) => {
-			// 完全匹配
-			if (selectedFiles.includes(item.key)) {
-				return item;
+			for (let i = 0; i < selectedFiles.length; i += 1) {
+				if (minimatch(item.key, selectedFiles[i])) {
+					return true;
+				}
 			}
+			return false;
 		});
 
 		return htmlFiles;

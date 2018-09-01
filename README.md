@@ -60,16 +60,16 @@ var htmlFiles = getHtmlEntry({
 [ 
 	{ 
 		key: 'comment',
-    	path: 'path/src/comment.html'
-    },
-  	{ 
-  		key: 'detail',
-    	path: 'path/src/detail.html'
-    },
-  	{ 
-  		key: 'index',
-    	path: 'path/src/index.html'
-    } 
+		path: 'path/src/comment.html'
+	},
+	{ 
+		key: 'detail',
+		path: 'path/src/detail.html'
+	},
+	{ 
+		key: 'index',
+		path: 'path/src/index.html'
+	} 
 ]
 
 var htmlFiles = getHtmlEntry({
@@ -81,16 +81,16 @@ var htmlFiles = getHtmlEntry({
 [ 
 	{ 
 		key: 'comment',
-    	path: 'path/src/page/comment/index.html'
-    },
-  	{ 
-  		key: 'detail',
-    	path: 'path/src/page/detail/index.html'
-    },
-  	{ 
-  		key: 'index',
-    	path: 'path/src/page/index/index.html'
-    } 
+		path: 'path/src/page/comment/index.html'
+	},
+	{ 
+		key: 'detail',
+		path: 'path/src/page/detail/index.html'
+	},
+	{ 
+		key: 'index',
+		path: 'path/src/page/index/index.html'
+	} 
 ]
 
 var htmlFiles = getHtmlEntry({
@@ -124,29 +124,37 @@ var htmlFiles = getHtmlEntry({
 	- 筛选 `html` 文件, 通常与 `getHtmlEntry` 一起使用
 	- 参数
 		- `htmlFiles`, `{Array}`, 所有 `html` 文件
-		- `selectedFiles`, `{Array}`, 选中的 `html` 文件
+		- `selectedFiles`, `{Array}`, 选中的 `html` 文件, 支持glob
 
 ```javascript
 var htmlFiles = filterHtmlFile([ 
 	{ 
 		key: 'comment',
-    	path: 'path/src/page/comment/index.html'
-    },
+		path: 'path/src/page/comment/index.html'
+	},
+	{ 
+		key: 'detail',
+		path: 'path/src/page/detail/index.html'
+	},
+	{ 
+		key: 'detail-m',
+		path: 'path/src/page/detail-m/index.html'
+	},
+	{ 
+		key: 'index',
+		path: 'path/src/page/index/index.html'
+	} 
+], ['detail*']);
+
+// 最终返回
+[ 
   	{ 
   		key: 'detail',
     	path: 'path/src/page/detail/index.html'
     },
   	{ 
-  		key: 'index',
-    	path: 'path/src/page/index/index.html'
-    } 
-], ['index']);
-
-// 最终返回
-[ 
-  	{ 
-  		key: 'index',
-    	path: 'path/src/page/index/index.html'
+  		key: 'detail-m',
+    	path: 'path/src/page/detail-m/index.html'
     } 
 ]
 
@@ -186,23 +194,27 @@ var htmlFiles = filterHtmlFile([
 * filterHtmlFileByCmd
 	- 根据 npm 命令进行 html 文件的筛选
 	- 参数
-		- htmlFiles, {Array}, 所有 `html` 文件
+		- htmlFiles, {Array}, 所有 `html` 文件, 支持glob
 
 ```javascript
-// 如果你使用以下命令启动你的脚本，npm run start -- --entry=index
+// 如果你使用以下命令启动你的脚本，npm run start -- --entry=detail*
 var htmlFiles = [ 
 	{ 
 		key: 'comment',
-    	path: 'path/src/page/comment/index.html'
-    },
-  	{ 
-  		key: 'detail',
-    	path: 'path/src/page/detail/index.html'
-    },
-  	{ 
-  		key: 'index',
-    	path: 'path/src/page/index/index.html'
-    } 
+		path: 'path/src/page/comment/index.html'
+	},
+	{ 
+		key: 'detail',
+		path: 'path/src/page/detail/index.html'
+	},
+	{ 
+		key: 'detail-m',
+		path: 'path/src/page/detail-m/index.html'
+	},
+	{ 
+		key: 'index',
+		path: 'path/src/page/index/index.html'
+	} 
 ];
 
 utils.filterHtmlFileByCmd(htmlFiles);
@@ -210,9 +222,13 @@ utils.filterHtmlFileByCmd(htmlFiles);
 // 返回值如下
 [
 	{
-  		key: 'index',
-    	path: 'path/src/page/index/index.html'
-    } 
+		key: 'detail',
+		path: 'path/src/page/detail/index.html'
+	},
+	{
+		key: 'detail-m',
+		path: 'path/src/page/detail-m/index.html'
+	}
 ]
 ```
 
@@ -276,20 +292,22 @@ var jsFiles = utils.getJsEntry({
 	- 筛选 js 文件, 通常搭配 `getJsEntry` 或者 `getJsFile` 使用
 	- 参数
 		- jsFiles, {Object}, 所有 `js` 文件
-		- selectedFiles, {Array}, 选中的 `js` 文件
+		- selectedFiles, {Array}, 选中的 `js` 文件, 支持glob
 
 ```javascript
 utils.filterJsFile({ 
 		'js/comment': [ 'path/src/page/comment/index.js' ],
 		'js/detail': ['path/src/page/detail/index.js' ],
+		'js/detail-m': ['path/src/page/detail-m/index.js' ],
 		'js/index': [ 'path/src/page/index/index.js' ] 
 	}, 
-	["js/index"]
+	["js/detail*"]
 );
 
-// 最后返回如下，如果 selectedFiles 值为 ["index"]，结果一样，因为这里允许部份匹配
+// 最后返回如下
 { 
-	'js/index': [ 'path/src/page/index/index.js' ] 
+	'js/detail': [ 'path/src/page/detail/index.js' ],
+	'js/detail-m': [ 'path/src/page/detail-m/index.js' ]
 }
 
 // 如果 selectedFiles 参数被忽略，则完整返回
@@ -298,14 +316,15 @@ utils.filterJsFile({
 * filterJsFileByCmd
 	- 根据 npm 命令进行 js 文件的筛选
 	- 参数
-		- jsFiles, {Object}, 所有 `js` 文件
+		- jsFiles, {Object}, 所有 `js` 文件, 支持glob
 
 ```javascript
-// 如果你使用以下命令启动你的脚本，npm run start -- --entry=index
+// 如果你使用以下命令启动你的脚本，npm run start -- --entry=js/detail*
 
 var jsFiles = { 
 	'js/comment': [ 'path/src/page/comment/index.js' ],
 	'js/detail': ['path/src/page/detail/index.js' ],
+	'js/detail-m': ['path/src/page/detail-m/index.js' ],
 	'js/index': [ 'path/src/page/index/index.js' ] 
 };
 
@@ -313,7 +332,8 @@ jsFiles = utils.filterJsFileByCmd(jsFiles);
 
 // 返回值为
 { 
-	'js/index': [ 'path/src/page/index/index.js' ] 
+	'js/detail': [ 'path/src/page/detail/index.js' ],
+	'js/detail-m': [ 'path/src/page/detail-m/index.js' ]
 }
 ```
 
